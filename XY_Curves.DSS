@@ -1,0 +1,2 @@
+New XYCurve.MyPVsT npts=4 xarray=[0.000 25.000 75.000 100.000] yarray=[1.200 1.000 0.800 0.600]
+New XYCurve.MyEff npts=4 xarray=[0.100 0.200 0.400 1.000] yarray=[0.860 0.900 0.930 0.970]

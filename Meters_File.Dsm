@@ -1,0 +1,8 @@
+table	sourcebus	V	140	156
+table	n_1	V	263	166
+table	n_h1mw	V	809	-95
+table	n_l250kw	V	932	-53
+table	n_l200kw	V	703	147
+table	n_b2mw	V	455	374
+table	n_f15mw	V	823	370
+table	Transformer.substation--0	PF	178	296
