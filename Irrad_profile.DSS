@@ -1,3 +1,0 @@
-New "LoadShape.MyIrrad" npts=1440 minterval=1.000000 mult=(File=MyIrrad_1min.csv)
-New "LoadShape.Load_1" npts=1439 minterval=1.000000 mult=(File=LoadShape1.CSV)
-New "LoadShape.WindSpeed" npts=8760 minterval=1.000000 mult=(File=Wind_Speed.csv)
