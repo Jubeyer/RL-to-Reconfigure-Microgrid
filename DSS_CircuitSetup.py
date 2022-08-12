@@ -178,21 +178,7 @@ def CktModSetup(DSSfile,sectional_swt,tie_swt,DER):
     DSSCktobj.dssText.command = "Set Maxiterations=5000"
     DSSCktobj.dssText.command = "Set maxcontroliter=5000"
     DSSCktobj.AllowForms=False
-    ##### Make additions ##### Applicable for user-defined sectionalizing, tie switches , and DERs
-    # Not required if you have a pre-defined micro-grid
-    """
-    for sline in sectional_swt:  # the sectionalizing switch control is established (the normal state is closed)
-        DSSCktobj.dssText.command=('New swtcontrol.swSec'+ str(sline['no']) +' SwitchedObj=Line.'+ sline['line'] +' Normal=c') #normally close
-
-    for tline in tie_swt: # First create new lines corresponding to tie lines
-        DSSCktobj.dssText.command=('New Line.'+ tline['name'] + ' Bus1=' + tline['from node']+ tline['from conn']  + ' Bus2=' + tline['to node'] +tline['to conn'] + ' LineCode=' + tline['code'] + ' Length=' + str(tline['length']) + ' units=kft')
-        DSSCktobj.dssText.command=('New swtcontrol.swTie'+ str(tline['no']) +' SwitchedObj=Line.'+ tline['name'] +' Normal=o') #normally open
-        Swobj='Line.'+ tline['name']
-        DSSCktobj.dssCircuit.SetActiveElement(Swobj)
-        DSSCktobj.dssText.command='open ' + Swobj +' term=1'       #switching the line open
-    for dg in DER:
-        DSSCktobj.dssText.command=('New Generator.'+dg['name']+' Bus1='+dg['bus']+'.1.2.3'+' kVar='+str(dg['kVar'])+' kW='+str(dg['kW'])+' pf='+str(dg['pf'])+' model='+str(dg['model'])+' kv='+str(dg['kv']))
-    """
+    
     return DSSCktobj
 
 # For switches if Normal State= 1 it is open and if Normal State= 2  it is close in DSS
