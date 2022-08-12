@@ -7,15 +7,17 @@ import numpy as np
 import networkx as nx
 from  DSS_CircuitSetup import*
 import matplotlib.pyplot as plt
+#################---------------------------------------------------------------
+# This section is for the action_space shrinking technique implementation
 #from valid_action_search import ACTION_VALID
-#from DSS_Initialize import *
+
 #####################-----------------------------------------------------------
-#DSSCktobj=CktModSetup(DSSfile,sectional_swt,tie_swt,DER)
+
 sectional_swt=[]
 tie_swt=[]
 DER=[]
 FolderName=os.path.dirname(os.path.realpath("__file__"))
-DSSfile=r""+ FolderName+ "/Microgrid_Proj.dss"
+DSSfile=r""+ FolderName+ "/ieee34Mod1.dss"
 DSSCktobj=CktModSetup(DSSfile,sectional_swt,tie_swt,DER)
 GENS=DSSCktobj.dssCircuit.Generators.AllNames
 DERS=[i for i in GENS if i not in "source"]
@@ -120,8 +122,7 @@ def get_state(DSSCktObj,G_init):
             aList=DSSCktObj.dssCircuit.ActiveCktElement.Powers
             P_Consumed.append(getSumOdds(aList))
             P_Rated.append(DSSCktObj.dssCircuit.Loads.kw)
-            #P_Total_Load+=Ckt.dssCircuit.ActiveElement.Power
-            #+=Ckt.dssCircuit.Loads.kvar
+            
 
     UE=(sum(P_Rated)-sum(P_Consumed))/(1000*KVA_base)
 
@@ -142,7 +143,7 @@ def get_state(DSSCktObj,G_init):
 
 
 def take_action(DSSCktObj,action):
-    # This is where I need to put the action in place
+    # This is where I need to put the action in place for action_space shrinking technique (Normal Operation)
     #action=ACTION_VALID[action]
     
     
@@ -163,13 +164,7 @@ def take_action(DSSCktObj,action):
     #Returns:the circuit object with action implemented
     DSSCircuit=DSSCktObj.dssCircuit
     i=DSSCircuit.SwtControls.First #1
-    # while (i>0): This will also work
-    #       Swname=DSSCircuit.SwtControls.Name
-    #       if action[i-1]==0: # i starts from 1 in DSS #if action is 0
-    #         DSSCktObj.dssText.command='Edit swtcontrol.' + Swname  + ' State=Open' #switching the line open
-    #       else:
-    #         DSSCktObj.dssText.command='Edit swtcontrol.' + Swname  + ' State=Close' #switching the line close
-    #       i=DSSCircuit.SwtControls.Next
+    
     while (i>0): #and (i<m-len(DERS)):
            Swobj=DSSCktObj.dssCircuit.SwtControls.SwitchedObj
            DSSCircuit.SetActiveElement(Swobj)
@@ -178,55 +173,8 @@ def take_action(DSSCktObj,action):
            else:
                DSSCktObj.dssText.command='close ' + Swobj +' term=1'      #switching the line close
            i=DSSCircuit.SwtControls.Next
-    #% Select the Generator that you want to change the PF
-    #count=m-len(DERS)
-    # j=DSSCircuit.Generators.First
-    # GenObj=DSSCircuit.Generators.Name
-    # DSSCircuit.SetActiveElement(GenObj)
-    
-    for j in DERS:
-        DSSGens=DSSCktObj.dssCircuit.Generators
-        #print(DSSGens.AllNames)
-        DSSGens.Name=j
-        #% Assign the new kW
-        
-        DSSGens.kW=DSSGens.kW*action[m-len(DERS)+DERS.index(j)]
-        
-        #count=count+1
-        # I only need to change the power rating of the DERs now. Do I need to Solve() for every generator rating update.
-        DSSCircuit.Solution.Solve() #solving the circuit to implement actions
-        #print(DSSGens.kW)
-        #------------------------------Plotting Section------------------------
-        #DSSCktObj.dssText.command='Buscoords Buscoords.dat   ! load in bus coordinates'
-    
-
-   
-
-        # % Get bus voltage magnitudes in pu and distances from energy meter and
-        # % plot in a scatter plot
-        
-        # % Get Voltage and Distances Array
-        # V1 = DSSCircuit.AllNodeVmagPUByPhase(0)
-        # #Dist1 = DSSCircuit.AllNodeDistancesByPhase(0)
-        # V2 = DSSCircuit.AllNodeVmagPUByPhase(1)
-        # #Dist2 = DSSCircuit.AllNodeDistancesByPhase(1)
-        # V3 = DSSCircuit.AllNodeVmagPUByPhase(2)
-        # #Dist3 = DSSCircuit.AllNodeDistancesByPhase(2)
-    
-        # # % Make Plot
-        
-        # plt.plot(V1,'k*',label="phase A")#;  % black *
-        # #hold on;
-        # plt.plot(V2, 'r+',label="phase B")#;  % red +
-        # plt.plot(V3, 'bd',label="phase C")#;  % diamond Marker
-        # plt.legend(loc='upper right')#; %put the legend
-        # plt.title('Voltage Profile Plot')#; %plot title
-            
-        # #ylim([0.95 1.05])#;
-        # plt.ylabel('Volts(pu)')#;
-        # #plt.xlabel('Distance from Substation')#;
-        # plt.show()
-        
+    DSSCircuit.Solution.Solve() #solving the circuit to implement actions
+           
     return DSSCktObj
 
 
@@ -269,18 +217,7 @@ def Volt_Constr(Vmagpu,nodes_conn):
         #print(V_viol)
     
     return V_viol
-    ##
-    # for i in range(len(nodes_conn)):
-    #     for phase_co in nodes_conn[i]:
-    #         if (Vmagpu[i][phase_co-1]<Vmin):
-    #             Vmin=Vmagpu[i][phase_co-1]
-    #         if (Vmagpu[i][phase_co-1]>Vmax):
-    #             Vmax=Vmagpu[i][phase_co-1]
-    # if (Vmax > V_upper) and (Vmin < V_lower):
-    #     V_viol=abs(Vmax-V_upper)+abs(V_lower-Vmin) # For the minimum and maximum voltage in the network(all nodes of all buses)
-    # else:
-    #     V_viol=0
-    # return V_viol
+    
 
 
 # Constraint for branch flow violation
@@ -296,26 +233,11 @@ def Flow_Constr(I_flow):
             flow_viol=0
     return flow_viol
 
-##############
-    # for i in I_flow:
-    #     if (i>I_upper) and (i<I_lower):
-    #         flow_viol=flow_viol+abs(i-I_upper)+abs(I_lower-i) #sum of all branch current violations
-    #     else:
-    #         flow_viol=0
-    # return flow_viol
 
 def get_reward(observ_dict):
     #Input: A dictionary describing the state of the network
     #Output: reward
-    #print(observ_dict['Unserved Energy'])
+    
     reward=-(observ_dict['Unserved Energy']+observ_dict['FlowViolation']+2*observ_dict['VoltageViolation']+ observ_dict['Convergence'])
-    #print(reward)
-    # if observ_dict['TopologicalConstr'] == 0 and observ_dict['Convergence'] == 0:
-    #     reward = 0
-    # else:
-    #     reward = -(observ_dict['Convergence']+observ_dict['Unserved Energy'])
-        #reward = -(observ_dict['TopologicalConstr'] + observ_dict['Convergence'])#+observ_dict['Unserved Energy'])
-    #reward = reward - observ_dict['loss']  # -(observ_dict['TopologicalConstr'] + observ_dict['Convergence'] )
-    # TO DO: Voltage and Current violations multiplier
-    # Should I use a multiplier for loss or scale down the penalty for topological violation
+    
     return reward
