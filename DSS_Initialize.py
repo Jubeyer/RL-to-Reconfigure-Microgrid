@@ -31,18 +31,7 @@ sectional_swt=[]
 tie_swt=[]
 DER=[]
 
-# Not required at this point
-switch_bus_map = np.array([
-    [30,19],
-    [21,22],
-    [22,24],
-    [16,17],
-    [12,16],
-    [16,19],
-    [12,29],
-    [25,29],
-    [7,16]
-])
+
 ###############################################################################
 
 
@@ -50,13 +39,13 @@ switch_bus_map = np.array([
 
 ###############################################################################
 FolderName=os.path.dirname(os.path.realpath("__file__"))
-DSSfile=r""+ FolderName+ "/Microgrid_Proj.dss"
+DSSfile=r""+ FolderName+ "/ieee34Mod1.dss"
 DSSCktobj=CktModSetup(DSSfile,sectional_swt,tie_swt,DER)
 n_actions=len([j for j in DSSCktobj.dssCircuit.Lines.AllNames if "sw" in j])
 mult_constant = 1.000000000
 def initialize():
     FolderName=os.path.dirname(os.path.realpath("__file__"))
-    DSSfile=r""+ FolderName+ "/Microgrid_Proj.dss"
+    DSSfile=r""+ FolderName+ "/ieee34Mod1.dss"
     #DSSCktobj=CktModSetup(DSSfile,sectional_swt,tie_swt) # initially the sectionalizing switches close and tie switches open
     
     # Commented out on 06/02/2022
@@ -72,7 +61,7 @@ def initialize():
 
 def test_initialize():       
     FolderName=os.path.dirname(os.path.realpath("__file__"))
-    DSSfile=r""+ FolderName+ "/Microgrid_Proj.dss"
+    DSSfile=r""+ FolderName+ "/ieee34Mod1.dss"
     #######################----------Older one without DER #####################
     #DSSCktobj=CktModSetup(DSSfile,sectional_swt,tie_swt)
     ###########################New one with DER #############################
@@ -114,35 +103,4 @@ def cartesian_coord(*arrays):
 #n_actions = len(sectional_swt) + len(tie_swt)
 
 
-"""
-def all_actions(n_actions):
-    a = [0,1]
-    SW_CONFIG=cartesian_coord(*n_actions*[a])
-    #total_actions=2**n_actions
-    return SW_CONFIG #,total_actions
-
-def valid_actions(n_actions):
-    ACTION_VALID=[]
-    SW_CONFIG=all_actions(n_actions)
-    
-    for s in SW_CONFIG:
-        #count=0
-        action=SW_CONFIG[SW_CONFIG.index(s)]
-        i=DSSCircuit.SwtControls.First #1
-        while (i>0):
-               Swobj=DSSCktObj.dssCircuit.SwtControls.SwitchedObj
-               DSSCircuit.SetActiveElement(Swobj)
-               if action[i-1]==0: # i starts from 1 in DSS #if action is 0
-                   DSSCktObj.dssText.command='open ' + Swobj +' term=1'       #switching the line open
-               else:
-                   DSSCktObj.dssText.command='close ' + Swobj +' term=1'      #switching the line close
-               i=DSSCircuit.SwtControls.Next
-        # Then check how many loops are there    
-        DSSTopology=DSSCktObj.dssCircuit.Topology
-        NumLoops=DSSTopology.NumLoops
-        print("For the switcing combination of: ",s)
-        print("Total Number of Loops:",myNumLoops)
-        if NumLoops==3:
-            ACTION_VALID.append(s)
-    return ACTION_VALID
-"""        
+       
