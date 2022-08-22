@@ -10,7 +10,7 @@ Users can reconfigure any given microgrid with minor modifications in the provid
 * To check the desired output from a trained model, the test 'loading condition' and 'line outage' can be given through the ``test_initialize" function in the DSS_Initialize.py script.
 
 ### Dataset
-The OpenDSS IEEE-34 bus test data were taken and modified to suit the experimental purpose.
+The OpenDSS IEEE-34 bus network data were taken and modified to suit the experimental purpose.
 
 ### Environment & Necessary Software
 The framework has been built in python 3.8 and it uses OpenDSS in the backend. To implement the reinforcement learning strategy to execute the reconfiguration task, the OpenAI Gym environment was utilized. Users are recommended to install those software to execute the scripts. Currently the scripts are only supported in Windows OS.
