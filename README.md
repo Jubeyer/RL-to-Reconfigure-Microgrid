@@ -3,11 +3,11 @@
 
 ## How to use
 Users can reconfigure any given microgrid with minor modifications in the provided scripts and get insightful results by following the instructions below:
--i)"new_training.py" is the main script to run. It can be run via any python IDE or GUI on a machine which has OpenDSS already installed.
- -ii) The trained models are stored in "logger" directory under the master directory.
--iii) The script tries to utilize all the existing cores of a cpu based machine. The users need to set the correct number of cpu defined under the main function in the "new_training.py" script. For  GPU based machine necessary modifications need to be made.
--iv) "openDSSEnv34.py" is the script where the environment has been built. For each changing scenarios, the reset function accommodates all the inputs like changing loading, line outages, etc.
--v) To check the desired output from a trained model, the test 'loading condition' and 'line outage' can be given through the ``test_initialize" function in the DSS_Initialize.py script.
+1."new_training.py" is the main script to run. It can be run via any python IDE or GUI on a machine which has OpenDSS already installed.
+2. The trained models are stored in "logger" directory under the master directory.
+3. The script tries to utilize all the existing cores of a cpu based machine. The users need to set the correct number of cpu defined under the main function in the "new_training.py" script. For  GPU based machine necessary modifications need to be made.
+4. "openDSSEnv34.py" is the script where the environment has been built. For each changing scenarios, the reset function accommodates all the inputs like changing loading, line outages, etc.
+5. To check the desired output from a trained model, the test 'loading condition' and 'line outage' can be given through the ``test_initialize" function in the DSS_Initialize.py script.
 
 ### Dataset
 The OpenDSS IEEE-34 bus test data were taken and modified to suit the experimental purpose.
