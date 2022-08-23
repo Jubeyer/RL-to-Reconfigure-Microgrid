@@ -1,19 +1,19 @@
-# Reinforcment Learning for Microgrid Network Reconfiguration 
+# Reinforcment Learning (RL) for Microgrid Network Reconfiguration 
  This repository hosts the scripts to execute a reinforcement learning driven microgrid network reconfiguration scheme in both normal and contingency state.
 
 ## How to use
 Users can reconfigure any given microgrid with minor modifications in the provided scripts and get insightful results by following the instructions below:
 * "new_training.py" is the main script to run. It can be run via any python IDE or GUI on a machine which has OpenDSS already installed.
 * The trained models are stored in "logger" directory under the master directory.
-* The script tries to utilize all the existing cores of a cpu based machine. The users need to set the correct number of cpu defined under the main function in the "new_training.py" script. For  GPU based machine necessary modifications need to be made.
-* "openDSSEnv34.py" is the script where the environment has been built. For each changing scenarios, the reset function accommodates all the inputs like changing loading, line outages, etc.
+* The script tries to utilize all the existing cores of a cpu-based machine. The users need to set the correct number of cpu defined under the main function in the "new_training.py" script. For GPU-based machines, necessary modifications need to be made.
+* "openDSSEnv34.py" is the script where the environment has been built. For each changing scenario, the reset function accommodates all the inputs like changing loading, line outages, etc.
 * To check the desired output from a trained model, the test 'loading condition' and 'line outage' can be given through the ``test_initialize" function in the DSS_Initialize.py script.
 
 ### Dataset
-The OpenDSS IEEE-34 bus network data were taken and modified to suit the experimental purpose.
+The OpenDSS IEEE-34 bus network data was taken and modified to test the RL-based microgrid reconfiguration.
 
 ### Environment & Necessary Software
-The framework has been built in python 3.8 and it uses OpenDSS in the backend. To implement the reinforcement learning strategy to execute the reconfiguration task, the OpenAI Gym environment was utilized. Users are recommended to install those software to execute the scripts. Currently the scripts are only supported in Windows OS.
+The framework has been built in python 3.8 and it uses OpenDSS in the backend. To implement the RL strategy to execute the reconfiguration task, the OpenAI Gym environment was utilized. Users are recommended to install those software to execute the scripts. Currently the scripts are only supported in Windows OS.
 
 ### Python library
 ```
@@ -28,12 +28,12 @@ OpenAI Gym           0.19.0
 ## Publications
 **If you use these scripts in your research, please cite our publications**:
 
-Rahman, J., Jacob, R. A., Paul, S., Chowdhury, S., & Zhang, J. (2022, April). Reinforcement Learning Enabled Microgrid Network Reconfiguration Under Disruptive Events. In 2022 IEEE Kansas Power and Energy Conference (KPEC) (pp. 1-6). IEEE.
+Rahman, J., Jacob, R. A., Paul, S., Chowdhury, S., & Zhang, J., Reinforcement Learning Enabled Microgrid Network Reconfiguration Under Disruptive Events, IEEE Kansas Power and Energy Conference (KPEC), Manhattan, Kansas, April 25 - 26, 2022.
 
 
 **Collaborations are always welcome if more help is needed.**
 ## License
-MIT License, Copyright (c) 2022 Jubeyer Rahman
+MIT License, Copyright (c) 2022 Jubeyer Rahman & Jie Zhang
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
@@ -48,4 +48,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 Jubeyer Rahman
 jxr180022@utdallas.edu
+
+Jie Zhang
+jiezhang@utdallas.edu 
 
