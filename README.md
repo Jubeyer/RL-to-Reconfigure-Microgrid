@@ -1,4 +1,4 @@
-# RL to Reconfigure Microgrid
+# Reinforcment Learning for Microgrid Network Reconfiguration 
  This repository hosts the scripts to execute a reinforcement learning driven microgrid network reconfiguration scheme in both normal and contingency state.
 
 ## How to use
